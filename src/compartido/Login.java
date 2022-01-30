@@ -45,7 +45,7 @@ public class Login extends JFrame
 	{
 		Decoracion iconos = new Decoracion();	
 		
-//		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("tienda-de-juegos (1).png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("tienda-de-juegos (1).png")));
 		setRootPaneCheckingEnabled(false);
 		setResizable(false);
 		setBounds(new Rectangle(0, 0, 0, 0));
