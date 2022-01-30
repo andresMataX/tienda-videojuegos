@@ -28,13 +28,14 @@ import javax.swing.table.DefaultTableModel;
 import clases.Conexion;
 import clases.Decoracion;
 import clases.Funcionalidades;
-import clases.SentenciasSQL;
 import compartido.Login;
 
 @SuppressWarnings("serial")
-public class EliArtAdmin extends JFrame
+public class SelecRegCamAdmin extends JFrame
 {
-	public EliArtAdmin()
+	static int cve_cam;
+	
+	public SelecRegCamAdmin()
 	{
 		Decoracion deco = new Decoracion();
 		DefaultTableModel model = new DefaultTableModel();
@@ -44,7 +45,7 @@ public class EliArtAdmin extends JFrame
 		getContentPane().setBackground(new Color(150,251,204));
 		setLocationRelativeTo(null);
 		setResizable(false);		
-		setTitle("| - Eliminar Artículo - |");
+		setTitle("| - Registrar Cambio - |");
 		
 		JLabel lbl_usuario = new JLabel("\u00A1HOLA " + deco.Nombre(Login.user) + "!");
 		lbl_usuario.setFont(new Font("Roboto", Font.PLAIN, 38));
@@ -60,39 +61,8 @@ public class EliArtAdmin extends JFrame
 		sc_prov.setBackground(new Color(95, 204, 153));	
 		getContentPane().add(sc_prov);
 		
-		JTable tb_art = new JTable();
-		tb_art.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int cve_art = new Funcionalidades().selecTabla(model, 0, tb_art, e);
-				int seleccion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar " + cve_art /*=nom_art*/ + "?", "Confirmar Eliminar Artículo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-				if (seleccion == 0)
-				{
-					
-					//
-					SentenciasSQL eli = new SentenciasSQL();
-					eli.deleteSQL("delete from articulos where cve_art = '" + cve_art + "'");
-					model.setRowCount(0);
-					mostrarTabla(model, tb_art);
-				}
-			}
-		});
-		tb_art.setGridColor(new Color(95, 204, 153));
-		tb_art.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tb_art.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		tb_art.setBackground(new Color(95, 204, 153));
-		tb_art.setForeground(Color.BLACK);
-		tb_art.setFont(new Font("Roboto", Font.PLAIN, 16));
-		model.addColumn(" ");
-		model.addColumn(" ");
-		model.addColumn(" ");
-		model.addColumn(" ");
-		tb_art.setModel(model);
-		sc_prov.setViewportView(tb_art);
-		mostrarTabla(model, tb_art);
-		
-		JLabel lbl_tit = new JLabel("ELIMINAR - ART\u00CDCULOS");
-		lbl_tit.setBounds(187, 75, 400, 45);
+		JLabel lbl_tit = new JLabel("SELECCIONAR ART\u00CDCULO A CAMBIAR");
+		lbl_tit.setBounds(64, 75, 645, 45);
 		lbl_tit.setFont(new Font("Roboto", Font.PLAIN, 38));
 		lbl_tit.setForeground(Color.BLACK);
 		getContentPane().add(lbl_tit);
@@ -106,14 +76,14 @@ public class EliArtAdmin extends JFrame
 		lbl_cve_prov.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(lbl_cve_prov);
 		
-		JLabel lbl_nom_art = new JLabel("NOMBRE");
-		lbl_nom_art.setBounds(131, 131, 201, 35);
-		lbl_nom_art.setBackground(new Color(95, 204, 153));
-		lbl_nom_art.setForeground(Color.BLACK);
-		lbl_nom_art.setFont(new Font("Roboto", Font.BOLD, 28));
-		lbl_nom_art.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_nom_art.setBorder(new LineBorder(new Color(0, 0, 0)));
-		getContentPane().add(lbl_nom_art);
+		JLabel lbl_art_cam = new JLabel("FECHA");
+		lbl_art_cam.setBounds(131, 131, 184, 35);
+		lbl_art_cam.setBackground(new Color(95, 204, 153));
+		lbl_art_cam.setForeground(Color.BLACK);
+		lbl_art_cam.setFont(new Font("Roboto", Font.BOLD, 28));
+		lbl_art_cam.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_art_cam.setBorder(new LineBorder(new Color(0, 0, 0)));
+		getContentPane().add(lbl_art_cam);
 		
 		Decoracion fecha = new Decoracion();
 		JLabel lbl_fecha = new JLabel(fecha.fecha());
@@ -137,58 +107,86 @@ public class EliArtAdmin extends JFrame
 		btn_regresar.setIcon(icono_mostrar);
 		getContentPane().add(btn_regresar);
 		
-		JLabel lbl_prov_art = new JLabel("PROVEEDOR");
-		lbl_prov_art.setBounds(332, 131, 193, 35);
-		lbl_prov_art.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_prov_art.setForeground(Color.BLACK);
-		lbl_prov_art.setFont(new Font("Roboto", Font.BOLD, 28));
-		lbl_prov_art.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lbl_prov_art.setBackground(new Color(95, 204, 153));
-		getContentPane().add(lbl_prov_art);
+		JLabel lbl_fch_cam = new JLabel("ART\u00CDCULO");
+		lbl_fch_cam.setBounds(315, 131, 210, 35);
+		lbl_fch_cam.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_fch_cam.setForeground(Color.BLACK);
+		lbl_fch_cam.setFont(new Font("Roboto", Font.BOLD, 28));
+		lbl_fch_cam.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lbl_fch_cam.setBackground(new Color(95, 204, 153));
+		getContentPane().add(lbl_fch_cam);
 		
-		JLabel lbl_cat_art = new JLabel("CATEGOR\u00CDA");
-		lbl_cat_art.setBounds(525, 131, 159, 35);
-		lbl_cat_art.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_cat_art.setForeground(Color.BLACK);
-		lbl_cat_art.setFont(new Font("Roboto", Font.BOLD, 28));
-		lbl_cat_art.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lbl_cat_art.setBackground(new Color(95, 204, 153));
-		getContentPane().add(lbl_cat_art);
+		JLabel lbl_cat_cam = new JLabel("CATEGOR\u00CDA");
+		lbl_cat_cam.setBounds(525, 131, 159, 35);
+		lbl_cat_cam.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_cat_cam.setForeground(Color.BLACK);
+		lbl_cat_cam.setFont(new Font("Roboto", Font.BOLD, 28));
+		lbl_cat_cam.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lbl_cat_cam.setBackground(new Color(95, 204, 153));
+		getContentPane().add(lbl_cat_cam);
+		
+		JTable tb_cam = new JTable();
+		tb_cam.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cve_cam = new Funcionalidades().selecTabla(model, 0, tb_cam, e);
+				new RegCamAdmin().setVisible(true);
+				dispose();
+			}
+		});	
+		tb_cam.setGridColor(new Color(95, 204, 153));
+		tb_cam.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tb_cam.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		tb_cam.setBackground(new Color(95, 204, 153));
+		tb_cam.setForeground(Color.BLACK);
+		tb_cam.setFont(new Font("Roboto", Font.PLAIN, 16));
+		tb_cam.setModel(model);
+		sc_prov.setViewportView(tb_cam);
 		
 		JLabel lbl_margen = new JLabel("");
 		lbl_margen.setBounds(10, 54, 748, 433);
 		lbl_margen.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		getContentPane().add(lbl_margen);
-	}
-	
-	private void mostrarTabla(DefaultTableModel model, JTable tb_usr)
-	{
+		
 		try 
-		{				
-			int ancho [] = {65, 201, 193, 159};
+		{	
+			model.addColumn(" ");
+			model.addColumn(" ");
+			model.addColumn(" ");
+			model.addColumn(" ");
+			
+			int ancho [] = {65, 184, 210, 159};
 			
 			for(int x = 0; x < 4; x++)
 			{
-				tb_usr.getColumnModel().getColumn(x).setPreferredWidth(ancho[x]);
+				tb_cam.getColumnModel().getColumn(x).setPreferredWidth(ancho[x]);
 			}
 			
-			Object dato[] = new Object[4];
+			Object dato[] = new Object[4];			
 			
-			Connection cn = Conexion.conectar();
-			PreparedStatement pst = cn.prepareStatement(
-				"select cve_art, nom_art, prov_art, cat_art from articulos");
+			Connection cn_ven = Conexion.conectar();
+			PreparedStatement pst_ven = cn_ven.prepareStatement(
+				"select cve_ven, fec_ven from ventas");
 			
-			ResultSet rs = pst.executeQuery();
+			ResultSet rs_ven = pst_ven.executeQuery();
 			
-			while(rs.next())
+			while(rs_ven.next())
 			{
-				dato[0] = rs.getInt(1);
-				dato[1] = rs.getString(2);
-				dato[2] = rs.getInt(3);
-				dato[3] = rs.getInt(4);
+				dato[0] = rs_ven.getInt(1);
+				dato[1] = rs_ven.getString(2);
+			}	
+			
+			Connection cn_d_ventas = Conexion.conectar();
+			PreparedStatement pst_d_ventas = cn_d_ventas.prepareStatement(
+				"select art_ven from detalle_ventas");
+			
+			ResultSet rs_d_ven = pst_d_ventas.executeQuery();
+			
+			while(rs_d_ven.next())
+			{
+				dato[2] = rs_d_ven.getString(1);
 				model.addRow(dato);
 			}
-			cn.close();
 		} 
 		catch (SQLException err) 
 		{

@@ -28,13 +28,14 @@ import javax.swing.table.DefaultTableModel;
 import clases.Conexion;
 import clases.Decoracion;
 import clases.Funcionalidades;
-import clases.SentenciasSQL;
 import compartido.Login;
 
 @SuppressWarnings("serial")
-public class EliArtAdmin extends JFrame
+public class SelecMosVenAdmin extends JFrame
 {
-	public EliArtAdmin()
+	static int cve_ven,cve_art;
+	
+	public SelecMosVenAdmin()
 	{
 		Decoracion deco = new Decoracion();
 		DefaultTableModel model = new DefaultTableModel();
@@ -43,8 +44,8 @@ public class EliArtAdmin extends JFrame
 		setBounds(0, 0, 785, 540);
 		getContentPane().setBackground(new Color(150,251,204));
 		setLocationRelativeTo(null);
-		setResizable(false);		
-		setTitle("| - Eliminar Artículo - |");
+		setResizable(false);	
+		setTitle("| - Mostrar Ventas - |");
 		
 		JLabel lbl_usuario = new JLabel("\u00A1HOLA " + deco.Nombre(Login.user) + "!");
 		lbl_usuario.setFont(new Font("Roboto", Font.PLAIN, 38));
@@ -60,45 +61,32 @@ public class EliArtAdmin extends JFrame
 		sc_prov.setBackground(new Color(95, 204, 153));	
 		getContentPane().add(sc_prov);
 		
-		JTable tb_art = new JTable();
-		tb_art.addMouseListener(new MouseAdapter() {
+		JTable tb_ven = new JTable();
+		tb_ven.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int cve_art = new Funcionalidades().selecTabla(model, 0, tb_art, e);
-				int seleccion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar " + cve_art /*=nom_art*/ + "?", "Confirmar Eliminar Artículo", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
-				if (seleccion == 0)
-				{
-					
-					//
-					SentenciasSQL eli = new SentenciasSQL();
-					eli.deleteSQL("delete from articulos where cve_art = '" + cve_art + "'");
-					model.setRowCount(0);
-					mostrarTabla(model, tb_art);
-				}
+				cve_ven = new Funcionalidades().selecTabla(model, 0, tb_ven, e);
+				new MosVenAdmin().setVisible(true);
+				dispose();
 			}
 		});
-		tb_art.setGridColor(new Color(95, 204, 153));
-		tb_art.setBorder(new LineBorder(new Color(0, 0, 0)));
-		tb_art.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		tb_art.setBackground(new Color(95, 204, 153));
-		tb_art.setForeground(Color.BLACK);
-		tb_art.setFont(new Font("Roboto", Font.PLAIN, 16));
-		model.addColumn(" ");
-		model.addColumn(" ");
-		model.addColumn(" ");
-		model.addColumn(" ");
-		tb_art.setModel(model);
-		sc_prov.setViewportView(tb_art);
-		mostrarTabla(model, tb_art);
+		tb_ven.setGridColor(new Color(95, 204, 153));
+		tb_ven.setBorder(new LineBorder(new Color(0, 0, 0)));
+		tb_ven.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		tb_ven.setBackground(new Color(95, 204, 153));
+		tb_ven.setForeground(Color.BLACK);
+		tb_ven.setFont(new Font("Roboto", Font.PLAIN, 16));
+		tb_ven.setModel(model);
+		sc_prov.setViewportView(tb_ven);
 		
-		JLabel lbl_tit = new JLabel("ELIMINAR - ART\u00CDCULOS");
-		lbl_tit.setBounds(187, 75, 400, 45);
+		JLabel lbl_tit = new JLabel("VENTAS");
+		lbl_tit.setBounds(315, 75, 145, 45);
 		lbl_tit.setFont(new Font("Roboto", Font.PLAIN, 38));
 		lbl_tit.setForeground(Color.BLACK);
 		getContentPane().add(lbl_tit);
 		
 		JLabel lbl_cve_prov = new JLabel("ID");
-		lbl_cve_prov.setBounds(66, 131, 65, 35);
+		lbl_cve_prov.setBounds(66, 131, 55, 35);
 		lbl_cve_prov.setBackground(new Color(95, 204, 153));
 		lbl_cve_prov.setForeground(Color.BLACK);
 		lbl_cve_prov.setHorizontalAlignment(SwingConstants.CENTER);
@@ -106,14 +94,14 @@ public class EliArtAdmin extends JFrame
 		lbl_cve_prov.setBorder(new LineBorder(new Color(0, 0, 0)));
 		getContentPane().add(lbl_cve_prov);
 		
-		JLabel lbl_nom_art = new JLabel("NOMBRE");
-		lbl_nom_art.setBounds(131, 131, 201, 35);
-		lbl_nom_art.setBackground(new Color(95, 204, 153));
-		lbl_nom_art.setForeground(Color.BLACK);
-		lbl_nom_art.setFont(new Font("Roboto", Font.BOLD, 28));
-		lbl_nom_art.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_nom_art.setBorder(new LineBorder(new Color(0, 0, 0)));
-		getContentPane().add(lbl_nom_art);
+		JLabel lbl_art_com = new JLabel("PRECIO");
+		lbl_art_com.setBounds(121, 131, 162, 35);
+		lbl_art_com.setBackground(new Color(95, 204, 153));
+		lbl_art_com.setForeground(Color.BLACK);
+		lbl_art_com.setFont(new Font("Roboto", Font.BOLD, 28));
+		lbl_art_com.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_art_com.setBorder(new LineBorder(new Color(0, 0, 0)));
+		getContentPane().add(lbl_art_com);
 		
 		Decoracion fecha = new Decoracion();
 		JLabel lbl_fecha = new JLabel(fecha.fecha());
@@ -137,8 +125,8 @@ public class EliArtAdmin extends JFrame
 		btn_regresar.setIcon(icono_mostrar);
 		getContentPane().add(btn_regresar);
 		
-		JLabel lbl_prov_art = new JLabel("PROVEEDOR");
-		lbl_prov_art.setBounds(332, 131, 193, 35);
+		JLabel lbl_prov_art = new JLabel("FECHA");
+		lbl_prov_art.setBounds(282, 131, 201, 35);
 		lbl_prov_art.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_prov_art.setForeground(Color.BLACK);
 		lbl_prov_art.setFont(new Font("Roboto", Font.BOLD, 28));
@@ -146,45 +134,47 @@ public class EliArtAdmin extends JFrame
 		lbl_prov_art.setBackground(new Color(95, 204, 153));
 		getContentPane().add(lbl_prov_art);
 		
-		JLabel lbl_cat_art = new JLabel("CATEGOR\u00CDA");
-		lbl_cat_art.setBounds(525, 131, 159, 35);
-		lbl_cat_art.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_cat_art.setForeground(Color.BLACK);
-		lbl_cat_art.setFont(new Font("Roboto", Font.BOLD, 28));
-		lbl_cat_art.setBorder(new LineBorder(new Color(0, 0, 0)));
-		lbl_cat_art.setBackground(new Color(95, 204, 153));
-		getContentPane().add(lbl_cat_art);
+		JLabel lbl_fch_com = new JLabel("USUARIO");
+		lbl_fch_com.setBounds(483, 131, 201, 35);
+		lbl_fch_com.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_fch_com.setForeground(Color.BLACK);
+		lbl_fch_com.setFont(new Font("Roboto", Font.BOLD, 28));
+		lbl_fch_com.setBorder(new LineBorder(new Color(0, 0, 0)));
+		lbl_fch_com.setBackground(new Color(95, 204, 153));
+		getContentPane().add(lbl_fch_com);
 		
 		JLabel lbl_margen = new JLabel("");
 		lbl_margen.setBounds(10, 54, 748, 433);
 		lbl_margen.setBorder(new LineBorder(new Color(0, 0, 0), 5));
 		getContentPane().add(lbl_margen);
-	}
-	
-	private void mostrarTabla(DefaultTableModel model, JTable tb_usr)
-	{
+		
 		try 
-		{				
-			int ancho [] = {65, 201, 193, 159};
+		{	
+			model.addColumn(" ");
+			model.addColumn(" ");
+			model.addColumn(" ");
+			model.addColumn(" ");
+			
+			int ancho [] = {55, 161, 201, 201};
 			
 			for(int x = 0; x < 4; x++)
 			{
-				tb_usr.getColumnModel().getColumn(x).setPreferredWidth(ancho[x]);
+				tb_ven.getColumnModel().getColumn(x).setPreferredWidth(ancho[x]);
 			}
 			
 			Object dato[] = new Object[4];
 			
 			Connection cn = Conexion.conectar();
 			PreparedStatement pst = cn.prepareStatement(
-				"select cve_art, nom_art, prov_art, cat_art from articulos");
+				"select cve_ven, pre_ven, fec_ven, usr_ven from ventas");
 			
 			ResultSet rs = pst.executeQuery();
 			
 			while(rs.next())
 			{
 				dato[0] = rs.getInt(1);
-				dato[1] = rs.getString(2);
-				dato[2] = rs.getInt(3);
+				dato[1] = rs.getDouble(2);
+				dato[2] = rs.getString(3);
 				dato[3] = rs.getInt(4);
 				model.addRow(dato);
 			}
@@ -196,4 +186,5 @@ public class EliArtAdmin extends JFrame
 			JOptionPane.showMessageDialog(null, "¡ERROR AL MOSTRAR INFORMACIÓN! Contacta con el Administrador.");
 		}
 	}
+
 }
