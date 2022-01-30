@@ -51,7 +51,7 @@ public class Login extends JFrame
 		setBounds(new Rectangle(0, 0, 0, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 865, 540);
-		setTitle("| - LOGIN- |");
+		setTitle("| - LOGIN - |");
 		setLocationRelativeTo(null);
 		JPanel contentPane = new JPanel();
 		contentPane.setBackground(new Color(150,251,204)); // Color: 96FBCC
@@ -66,7 +66,7 @@ public class Login extends JFrame
 		
 		JLabel lbl_usuario = new JLabel("USUARIO");
 		lbl_usuario.setForeground(Color.BLACK);
-		lbl_usuario.setFont(new Font("Roboto", Font.PLAIN, 11));
+		lbl_usuario.setFont(new Font("Roboto", Font.PLAIN, 26));
 		lbl_usuario.setBounds(348, 261, 116, 33);
 		lbl_titulo.setForeground(new Color(0,0,0));
 		contentPane.add(lbl_usuario);
@@ -82,7 +82,7 @@ public class Login extends JFrame
 		txt_user.setBackground(Color.WHITE);
 		txt_user.setHorizontalAlignment(SwingConstants.CENTER);
 		txt_user.setForeground(Color.BLACK);
-		txt_user.setFont(new Font("Roboto", Font.PLAIN, 5));
+		txt_user.setFont(new Font("Roboto", Font.PLAIN, 22));
 		txt_user.setBounds(250, 297, 350, 28);
 		contentPane.add(txt_user);
 		txt_user.setColumns(10);

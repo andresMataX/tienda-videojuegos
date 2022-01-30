@@ -12,8 +12,8 @@ public class Conexion
 		String url, user, pass;
 		
 		url = "jdbc:mysql://localhost/tienda_videojuegos";
-		user = "root";
-		pass = "";
+		user = "chers0";
+		pass = "Chersito21";
 		
 		try
 		{
