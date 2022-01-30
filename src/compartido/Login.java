@@ -12,9 +12,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 import admin.Administrador;
-//import cajero.Cajero;
-//import clases.Conexion;
-//import clases.Decoracion;
+import cajero.Cajero;
+import clases.Conexion;
+import clases.Decoracion;
 import java.awt.Cursor;
 import javax.swing.Icon;
 import java.awt.Rectangle;
@@ -43,7 +43,7 @@ public class Login extends JFrame
 
 	public Login()
 	{
-//		Decoracion iconos = new Decoracion();	
+		Decoracion iconos = new Decoracion();	
 		
 //		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("tienda-de-juegos (1).png")));
 		setRootPaneCheckingEnabled(false);
@@ -106,53 +106,53 @@ public class Login extends JFrame
 				String pass = txt_pass.getText().trim();
 				if (!user.equals("") && !pass.equals(""))
 				{	
-//					try
-//					{	
-//						// Se hace la conexión a la base de datos
-//						Connection cn = Conexion.conectar();
-//						//  Sentencia para validar que exista un usuario con esa contraseña
-//						PreparedStatement pst = cn.prepareStatement(
-//								"select niv_usr, cve_usr from usuarios where usr_usr = '" + user + "' and pass_usr = '" + pass + "'");
-//						ResultSet rs = pst.executeQuery();
-//						// Revisa si hay o no alguna coincidencia
-//						if (rs.next())
-//						{
-//							cve_user = rs.getInt("cve_usr");
-//							int tipo_nivel = rs.getInt("niv_usr");
-//							if (tipo_nivel == 1)
-//							{
-//								new Cajero().setVisible(true);
-//								dispose();
-//							} 
-//							else
-//							{
-//								new Administrador().setVisible(true);
-//								dispose();
-//							}
-//						} 
-//						else
-//						{
-//							// Te elimina un intento, tienes 3
-//							intentos--;
-//							if (intentos == 0)
-//							{
-//								JOptionPane.showMessageDialog(null, "Demasiados intentos fallidos.\nApagando aplicación. . .");
-//								System.exit(0);
-//							}
-//							else
-//							{
-//								JOptionPane.showMessageDialog(null, "Datos de Acceso Incorrectos | Intentos restantes: " + intentos);
-//							}
-//							txt_user.setText("");
-//							txt_pass.setText("");
-//						}
-//						cn.close();
-//					} 
-//					catch (Exception e2)
-//					{
-//						System.err.print("ERROR EN EL BOTÓN ACCEDER. " + e2);
-//						JOptionPane.showMessageDialog(null, "¡ERROR AL INICIAR SESIÓN! Contactar con el Desarrollador.");
-//					}
+					try
+					{	
+						// Se hace la conexión a la base de datos
+						Connection cn = Conexion.conectar();
+						//  Sentencia para validar que exista un usuario con esa contraseña
+						PreparedStatement pst = cn.prepareStatement(
+								"select niv_usr, cve_usr from usuarios where usr_usr = '" + user + "' and pass_usr = '" + pass + "'");
+						ResultSet rs = pst.executeQuery();
+						// Revisa si hay o no alguna coincidencia
+						if (rs.next())
+						{
+							cve_user = rs.getInt("cve_usr");
+							int tipo_nivel = rs.getInt("niv_usr");
+							if (tipo_nivel == 1)
+							{
+								new Cajero().setVisible(true);
+								dispose();
+							} 
+							else
+							{
+								new Administrador().setVisible(true);
+								dispose();
+							}
+						} 
+						else
+						{
+							// Te elimina un intento, tienes 3
+							intentos--;
+							if (intentos == 0)
+							{
+								JOptionPane.showMessageDialog(null, "Demasiados intentos fallidos.\nApagando aplicación. . .");
+								System.exit(0);
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "Datos de Acceso Incorrectos | Intentos restantes: " + intentos);
+							}
+							txt_user.setText("");
+							txt_pass.setText("");
+						}
+						cn.close();
+					} 
+					catch (Exception e2)
+					{
+						System.err.print("ERROR EN EL BOTÓN ACCEDER. " + e2);
+						JOptionPane.showMessageDialog(null, "¡ERROR AL INICIAR SESIÓN! Contactar con el Desarrollador.");
+					}
 				} 
 				else
 				{
@@ -180,26 +180,26 @@ public class Login extends JFrame
 		btn_apagar.setBorder(null);
 		btn_apagar.setBackground(new Color(150,251,204));
 		btn_apagar.setBounds(781, 17, 50, 50);
-//		Icon icono_apagar = iconos.icono("apagar.png", 50, 50);
-//		btn_apagar.setIcon(icono_apagar);
+		Icon icono_apagar = iconos.icono("apagar.png", 50, 50);
+		btn_apagar.setIcon(icono_apagar);
 		contentPane.add(btn_apagar);
 		
 		JLabel lbl_logo = new JLabel("");
 		lbl_logo.setBounds(325, 50, 200, 200);
-//		Icon icono_logo = iconos.icono("tienda-de-juegos.png", 200, 200);
-//		lbl_logo.setIcon(icono_logo);
+		Icon icono_logo = iconos.icono("tienda-de-juegos.png", 200, 200);
+		lbl_logo.setIcon(icono_logo);
 		contentPane.add(lbl_logo);
 		
 		JLabel lbl_admin = new JLabel("");
 		lbl_admin.setBounds(44, 281, 150, 150);
-//		Icon icono_admin = iconos.icono("administrador.png", 150, 150);
-//		lbl_admin.setIcon(icono_admin);
+		Icon icono_admin = iconos.icono("administrador.png", 150, 150);
+		lbl_admin.setIcon(icono_admin);
 		contentPane.add(lbl_admin);
 		
 		JLabel lbl_cajero = new JLabel("");
 		lbl_cajero.setBounds(656, 281, 150, 150);
-//		Icon icono_cajero = iconos.icono("cajero.png", 150, 150);
-//		lbl_cajero.setIcon(icono_cajero);
+		Icon icono_cajero = iconos.icono("cajero.png", 150, 150);
+		lbl_cajero.setIcon(icono_cajero);
 		contentPane.add(lbl_cajero);
 		
 		JLabel lbl_margen = new JLabel("");
